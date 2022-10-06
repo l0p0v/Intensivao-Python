@@ -12,15 +12,6 @@ def exibir_cotacao(cotacao: float):
     return str(round(cotacao, 2)).replace('.', ',')
 
 
-# remover arquivo
-try:
-    os.remove('Produtos Novo.xlsx')
-    print('Arquivo removido')
-except FileNotFoundError:
-    print('Arquivo não encontrado')
-finally:
-    print('Coletando dados...')
-
 # opções do navegador
 options = webdriver.ChromeOptions()
 options.add_argument("--headless")  # rodar em segundo plano
@@ -53,7 +44,6 @@ navegador.find_element('xpath', '/html/body/div[1]/div[3]/form/div[1]/div[1]/div
     'cotação do euro')
 navegador.find_element('xpath', '/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input').send_keys(
     Keys.ENTER)
-
 
 # pegar a contação que tá no Google
 cotacao_euro = float(navegador.find_element(By.XPATH,
@@ -123,6 +113,6 @@ df['Preço de Venda'] = round(df['Preço de Venda'], 2)
 # Passo 5: Exportar a base de preços atualizada
 df.to_excel(ARQUIVO, index=False)
 
-print()
-print(rf'Arquivo salvo em {CWD}\{ARQUIVO}')
+print('\nNova base de dados criada!')
+print(f'Arquivo salvo em {CWD}\\{ARQUIVO}')
 input()
